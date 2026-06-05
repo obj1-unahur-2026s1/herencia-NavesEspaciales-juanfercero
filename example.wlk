@@ -6,7 +6,10 @@ class Nave{
   method direccion() = direccion
 
   method acelerar(cuanto){
-    velocidad = ((velocidad + cuanto).min(100000)).max(0)
+    velocidad = ((velocidad + cuanto).min(100000))
+  }
+  method desacelerar(cuanto){
+    velocidad = (velocidad - cuanto).max(0)
   }
 
   method prepararViaje()  //lo convierte en clase abstracta
