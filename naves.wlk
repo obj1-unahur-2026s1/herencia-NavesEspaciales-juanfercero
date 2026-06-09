@@ -43,8 +43,8 @@ class NaveBaliza inherits Nave{
   }
 
   override method prepararViaje(){    //sobrescribe el método de la clase padre
-    
     self.cambiarColorBaliza("verde")
+    self.ponerseParaleloAlSol()
   }
 }
 
@@ -64,6 +64,12 @@ class NaveDePasajeros inherits Nave{
   }
   method cargarBebida(cant) {
     cantBebida += cant
+  }
+
+  override method prepararViaje(){    //sobrescribe el método de la clase padre
+    self.cargarComida(pasajeros*4)
+    self.cargarBebida(pasajeros*6)
+    self.acercarseUnPocoAlSol()
   }
 }
 
@@ -100,5 +106,12 @@ class NaveDeCombate inherits Nave{
   }
   method esEscueto() {
     return mensajesEnviados.isEmpty()
+  }
+
+  override method prepararViaje(){    //sobrescribe el método de la clase padre
+    self.ponerseVisible()
+    self.replegarMisiles()
+    self.acelerar(15000)
+    self.emitioMensaje("Saliendo en misión")
   }
 }
