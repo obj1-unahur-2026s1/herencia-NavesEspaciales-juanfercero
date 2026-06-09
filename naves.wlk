@@ -1,9 +1,11 @@
 class Nave{
   var velocidad = 0
   var direccion = 0
+  var combustible = 0
 
   method velocicidad() = velocidad
   method direccion() = direccion
+  method combustible() = combustible 
 
   method acelerar(cuanto){
     velocidad = ((velocidad + cuanto).min(100000))
@@ -27,10 +29,23 @@ class Nave{
     direccion = (direccion - 1).max(-10)
   }
 
-  method prepararViaje()  //lo convierte en clase abstracta
-} //el metodo abstracto permite que todas las naves tengan un método prepararViaje, pero cada una lo implementa a su manera o no hace nada por default
+  method prepararViaje()  {
+    self.cargarCombustible(30000)
+    self.acelerar(5000)
+  }
+  //lo convierte en clase abstracta
+  //el metodo abstracto permite que todas las naves tengan un método prepararViaje, pero cada una lo implementa a su manera o no hace nada por default
   //además impide crear objetos directamente de la clase Nave, ya que no se puede implementar el método prepararViaje
+  //por la seccion de combustible y que todos comparten la misma carga parece que va a tener que dejar de ser abstracto
 
+  //Combustible
+  method cargarCombustible(cant) {
+    combustible += cant
+  }
+  method descargarCombustible(cant) {
+    combustible -= cant
+  }
+}
 
 
 
@@ -43,6 +58,7 @@ class NaveBaliza inherits Nave{
   }
 
   override method prepararViaje(){    //sobrescribe el método de la clase padre
+    super()
     self.cambiarColorBaliza("verde")
     self.ponerseParaleloAlSol()
   }
@@ -67,6 +83,7 @@ class NaveDePasajeros inherits Nave{
   }
 
   override method prepararViaje(){    //sobrescribe el método de la clase padre
+    super()
     self.cargarComida(pasajeros*4)
     self.cargarBebida(pasajeros*6)
     self.acercarseUnPocoAlSol()
@@ -109,6 +126,7 @@ class NaveDeCombate inherits Nave{
   }
 
   override method prepararViaje(){    //sobrescribe el método de la clase padre
+    super()
     self.ponerseVisible()
     self.replegarMisiles()
     self.acelerar(15000)

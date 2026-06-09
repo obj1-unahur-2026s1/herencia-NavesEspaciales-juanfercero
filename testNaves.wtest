@@ -1,0 +1,12 @@
+import naves.*
+
+describe "naves tests" {
+  const n1 = new NaveDeCombate() 
+
+  test "probamos que funcione prepararViaje" {
+    assert.equals(0, n1.combustible())
+    n1.prepararViaje()
+    assert.equals(30000, n1.combustible())
+    assert.notThat(n1.estaInvisible())
+  }
+}
