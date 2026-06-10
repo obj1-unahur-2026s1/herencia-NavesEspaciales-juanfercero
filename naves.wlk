@@ -52,6 +52,14 @@ class Nave{
   }
 
   method condicionExtraDeTranquilidad() //vuelve a ser una clase abstracta nice
+
+  //Amenaza
+  method recibirAmenaza() {
+    self.escapar()
+    self.avisar()
+  }
+  method escapar()
+  method avisar()
 }
 
 
@@ -74,10 +82,18 @@ class NaveBaliza inherits Nave{
   override method condicionExtraDeTranquilidad() {
     return colorBaliza != "rojo"
   }
+
+  //amenaza
+  override method escapar() {
+    self.irHaciaElSol()
+  }
+  override method avisar() {
+    self.cambiarColorBaliza("rojo")
+  }
 }
 
 class NaveDePasajeros inherits Nave{
-  const pasajeros = 0
+  const pasajeros = 2
   var cantComida = 0
   var cantBebida = 0
 
@@ -103,6 +119,15 @@ class NaveDePasajeros inherits Nave{
 
   //tranquilidad
   override method condicionExtraDeTranquilidad() {
+  }
+
+  //amenaza
+  override method escapar() {
+    velocidad * 2
+  }
+  override method avisar() {
+    self.descargarComida(pasajeros)
+    self.descargarBebida(pasajeros*2)
   }
 }
 
@@ -155,12 +180,21 @@ class NaveDeCombate inherits Nave{
     self.ponerseVisible()
     self.replegarMisiles()
     self.acelerar(15000)
-    self.emitioMensaje("Saliendo en misión")
+    self.emitirMensaje("Saliendo en misión")
   }
 
   //tranquilidad
   override method condicionExtraDeTranquilidad() {
     return not self.misilesDesplegados()
+  }
+
+  //amenaza
+  override method escapar() {
+    self.acercarseUnPocoAlSol()
+    self.acercarseUnPocoAlSol()
+  }
+  override method avisar() {
+    self.emitirMensaje("Amenaza recibida")
   }
 }
 
@@ -171,3 +205,5 @@ class NaveDeCombateSilenciosa inherits NaveDeCombate{
     return not self.estaInvisible()
   }
 }
+
+//Amenazas hechas
