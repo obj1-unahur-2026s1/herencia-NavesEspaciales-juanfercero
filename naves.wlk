@@ -45,6 +45,13 @@ class Nave{
   method descargarCombustible(cant) {
     combustible -= cant
   }
+
+  //Tranquilidad
+  method estaTranquila() {
+    return combustible >= 4000 && velocidad < 12000 && self.condicionExtraDeTranquilidad()
+  }
+
+  method condicionExtraDeTranquilidad() //vuelve a ser una clase abstracta nice
 }
 
 
@@ -61,6 +68,11 @@ class NaveBaliza inherits Nave{
     super()
     self.cambiarColorBaliza("verde")
     self.ponerseParaleloAlSol()
+  }
+
+  //tranquilidad
+  override method condicionExtraDeTranquilidad() {
+    return colorBaliza != "rojo"
   }
 }
 
@@ -87,6 +99,19 @@ class NaveDePasajeros inherits Nave{
     self.cargarComida(pasajeros*4)
     self.cargarBebida(pasajeros*6)
     self.acercarseUnPocoAlSol()
+  }
+
+  //tranquilidad
+  override method condicionExtraDeTranquilidad() {
+  }
+}
+
+class NaveHospital inherits NaveDePasajeros{
+  const tieneQuirofanosPreparados = true
+
+  //tranquilidad
+  override method condicionExtraDeTranquilidad() {
+    return tieneQuirofanosPreparados
   }
 }
 
@@ -131,5 +156,18 @@ class NaveDeCombate inherits Nave{
     self.replegarMisiles()
     self.acelerar(15000)
     self.emitioMensaje("Saliendo en misión")
+  }
+
+  //tranquilidad
+  override method condicionExtraDeTranquilidad() {
+    return not self.misilesDesplegados()
+  }
+}
+
+class NaveDeCombateSilenciosa inherits NaveDeCombate{
+  //tranquilidad
+  override method condicionExtraDeTranquilidad() {
+    super()
+    return not self.estaInvisible()
   }
 }
