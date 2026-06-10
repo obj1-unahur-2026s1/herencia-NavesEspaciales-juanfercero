@@ -1,12 +1,24 @@
 import naves.*
 
 describe "naves tests" {
-  const n1 = new NaveDeCombate() 
+  const n1 = new NaveDeCombate()
+  const n2 = new NaveBaliza()
 
-  test "probamos que funcione prepararViaje" {
+  test "probamos que funcione prepararViaje con NaveDeCombate" {
     assert.equals(0, n1.combustible())
     n1.prepararViaje()
     assert.equals(30000, n1.combustible())
     assert.notThat(n1.estaInvisible())
+  }
+
+  test "relajo de NaveBaliza" {
+    assert.that(n2.tienePocaActividad())
+    assert.notThat(n2.estaDeRelajo())
+    n2.cargarCombustible(5000)
+    assert.that(n2.estaDeRelajo())
+    n2.recibirAmenaza()
+    assert.notThat(n2.tienePocaActividad())
+    assert.notThat(n2.estaDeRelajo())
+    assert.that(n2.cambioAlgunaVez())
   }
 }

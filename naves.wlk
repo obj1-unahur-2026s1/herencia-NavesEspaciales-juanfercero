@@ -60,16 +60,23 @@ class Nave{
   }
   method escapar()
   method avisar()
+
+  //Relajo
+  method estaDeRelajo() {
+    return self.estaTranquila() and self.tienePocaActividad()
+  }
+  method tienePocaActividad()
 }
 
 
 
 class NaveBaliza inherits Nave{
   var colorBaliza = "verde"
-
+  var cambioAlgunaVez = false
 
   method cambiarColorBaliza(nuevoColor){
     colorBaliza = nuevoColor
+    cambioAlgunaVez = true
   }
 
   override method prepararViaje(){    //sobrescribe el método de la clase padre
@@ -90,15 +97,25 @@ class NaveBaliza inherits Nave{
   override method avisar() {
     self.cambiarColorBaliza("rojo")
   }
+
+  //relajo
+  override method tienePocaActividad(){
+    return not cambioAlgunaVez
+  }
+
+  //para ver en el test
+  method cambioAlgunaVez() = cambioAlgunaVez
 }
 
 class NaveDePasajeros inherits Nave{
   const pasajeros = 2
   var cantComida = 0
   var cantBebida = 0
+  var comidaServida = 0
 
   method descargarComida(cant)  {
     cantComida -= cant
+    comidaServida += cant
   }
   method cargarComida(cant) {
     cantComida += cant
@@ -128,6 +145,11 @@ class NaveDePasajeros inherits Nave{
   override method avisar() {
     self.descargarComida(pasajeros)
     self.descargarBebida(pasajeros*2)
+  }
+
+  //relajo
+  override method tienePocaActividad(){
+    return comidaServida >= 50
   }
 }
 
@@ -206,6 +228,9 @@ class NaveDeCombate inherits Nave{
   override method avisar() {
     self.emitirMensaje("Amenaza recibida")
   }
+
+  //relajo
+  override method tienePocaActividad() {} //indispensable para no volverlo abstracto a NaveDeCombate
 }
 
 class NaveDeCombateSilenciosa inherits NaveDeCombate{
