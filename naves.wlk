@@ -132,11 +132,21 @@ class NaveDePasajeros inherits Nave{
 }
 
 class NaveHospital inherits NaveDePasajeros{
-  const tieneQuirofanosPreparados = true
+  var tieneQuirofanosPreparados = false
 
   //tranquilidad
   override method condicionExtraDeTranquilidad() {
     return tieneQuirofanosPreparados
+  }
+
+  //Amenaza 2
+  method prepararQuirofano() {
+    tieneQuirofanosPreparados = true
+  }
+
+  override method recibirAmenaza() {
+    super()
+    self.prepararQuirofano()
   }
 }
 
@@ -204,6 +214,11 @@ class NaveDeCombateSilenciosa inherits NaveDeCombate{
     super()
     return not self.estaInvisible()
   }
-}
 
-//Amenazas hechas
+  //Amenaza 2
+  override method recibirAmenaza() {
+    super()
+    self.desplegarMisiles()
+    self.ponerseInvisible()
+  }
+}
